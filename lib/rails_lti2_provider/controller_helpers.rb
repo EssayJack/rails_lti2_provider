@@ -13,7 +13,7 @@ module RailsLti2Provider
     end
 
     def registration_request
-      registration_request = IMS::LTI::Models::Messages::Message.generate(params)
+      registration_request = IMS::LTI::Models::Messages::Message.generate(params.except(:action, :controller))
       @registration = RailsLti2Provider::Registration.new(
           registration_request_params: registration_request.post_params,
           tool_proxy_json: RailsLti2Provider::ToolProxyRegistration.new(registration_request, self).tool_proxy.as_json
@@ -48,8 +48,8 @@ module RailsLti2Provider
 
     def add_param(url, param_name, param_value)
       uri = URI(url)
-      params = URI.decode_www_form(uri.query || '') << [param_name, param_value]
-      uri.query = URI.encode_www_form(params)
+      query_params = URI.decode_www_form(uri.query || '') << [param_name, param_value]
+      uri.query = URI.encode_www_form(query_params)
       uri.to_s
     end
 

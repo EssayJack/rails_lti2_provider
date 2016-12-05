@@ -3,7 +3,7 @@ require 'rails/generators/migration'
 
 class RailsLti2Provider::InstallGenerator < Rails::Generators::Base
   include Rails::Generators::Migration
-  
+
   source_root File.expand_path('../templates', __FILE__)
 
   def self.next_migration_number(dirname)
@@ -19,7 +19,7 @@ class RailsLti2Provider::InstallGenerator < Rails::Generators::Base
   end
 
   def copy_migrations
-    migration_template "create_lti2_tables.rb", "db/migrate/create_lti2_tables.rb"
+    migration_template "create_lti2_provider_tables.rb", "db/migrate/create_lti2_provider_tables.rb"
   end
 
   private

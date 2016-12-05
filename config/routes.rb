@@ -10,8 +10,8 @@ RailsLti2Provider::Engine.routes.draw do
     end
   end
 
-  post 'tool_proxy/register', to: 'tools#register', as: :tool_proxy_registration
-  get  'tool_proxy/submit_registration/:registration_uuid', to: 'tools#submit_proxy', as: :submit_proxy
+  post 'register', to: 'tools#register', as: :tool_proxy_registration
+  get  'submit_registration/:registration_uuid', to: 'tools#submit_proxy', as: :submit_proxy
 
   get 'tool_proxy/:tool_proxy_id', to: 'tools#show', as: :show_tool
 

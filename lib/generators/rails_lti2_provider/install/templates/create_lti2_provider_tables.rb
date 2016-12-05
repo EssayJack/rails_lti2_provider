@@ -1,7 +1,16 @@
 class CreateLti2ProviderTables < ActiveRecord::Migration
   def change
+    create_table "rails_lti2_provider_tools" do |t|
+      t.string   "uuid"
+      t.text     "shared_secret"
+      t.text     "tool_settings"
+      t.string   "lti_version"
+
+      t.timestamps
+    end
+
     create_table "rails_lti2_provider_lti_launches" do |t|
-      t.string   "tool_proxy_id"
+      t.integer  "tool_id",                     limit: 8
       t.string   "nonce"
       t.text     "message"
 
@@ -13,6 +22,8 @@ class CreateLti2ProviderTables < ActiveRecord::Migration
       t.text     "registration_request_params"
       t.text     "tool_proxy_json"
       t.string   "workflow_state"
+      t.integer  "tool_id",                     limit: 8
+      t.text     "correlation_id"
 
       t.timestamps
     end
@@ -24,7 +35,5 @@ class CreateLti2ProviderTables < ActiveRecord::Migration
 
       t.timestamps
     end
-
-    add_index "rails_lti2_provider_registrations", ["correlation_id"], name: "index_rails_lti2_provider_registrations_on_correlation_id", unique: true, using: :btree
   end
 end

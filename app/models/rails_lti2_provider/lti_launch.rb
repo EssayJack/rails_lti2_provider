@@ -1,12 +1,15 @@
 module RailsLti2Provider
   class LtiLaunch < ActiveRecord::Base
+    attr_accessible :tool, :nonce, :message
+
     validates_presence_of :tool_id, :nonce
     belongs_to :tool
     serialize :message
 
     def self.check_launch(lti_message)
       tool = Tool.find_by_uuid(lti_message.oauth_consumer_key)
-      raise Unauthorized.new(:invalid_signature) unless lti_message.valid_signature?(tool.shared_secret)
+      lti_message.signed_post_params(tool.shared_secret)
+      raise Unauthorized.new(:invalid_signature) unless lti_message.message_authenticator.valid_signature?
       raise Unauthorized.new(:invalid_nonce) if tool.lti_launches.where(nonce: lti_message.oauth_nonce).count > 0
       raise Unauthorized.new(:request_to_old) if  DateTime.strptime(lti_message.oauth_timestamp,'%s') < 5.minutes.ago
       tool.lti_launches.where('created_at > ?', 1.day.ago).delete_all
