@@ -5,6 +5,7 @@ class CreateLti2ProviderTables < ActiveRecord::Migration
       t.text     "shared_secret"
       t.text     "tool_settings"
       t.string   "lti_version"
+      t.text     "notes"
 
       t.timestamps
     end
