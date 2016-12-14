@@ -1,6 +1,6 @@
 module RailsLti2Provider
   class Tool < ActiveRecord::Base
-    attr_accessible :uuid, :shared_secret, :lti_version, :tool_settings, :notes
+    attr_accessible :uuid, :shared_secret, :lti_version, :tool_settings, :notes, :requires_product_key
 
     before_validation :autogenerate
     validates_presence_of :lti_version

@@ -6,6 +6,7 @@ class CreateLti2ProviderTables < ActiveRecord::Migration
       t.text     "tool_settings"
       t.string   "lti_version"
       t.text     "notes"
+      t.boolean  "requires_product_key"
 
       t.timestamps
     end
